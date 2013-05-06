@@ -1,6 +1,6 @@
-# Nytimes::Article::Search
+# NytimesArticle
 
-TODO: Write a gem description
+A thin Ruby client for The New York Times Article Search API
 
 ## Installation
 
@@ -18,7 +18,9 @@ Or install it yourself as:
 
 ## Usage
 
+```
 TODO: Write usage instructions here
+```
 
 ## Contributing
 
