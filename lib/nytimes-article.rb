@@ -41,7 +41,7 @@ module NytimesArticle
     ##
     # Builds a request URI to call the API server
     def build_request_url(params)
-      URI::HTTP.build :host => API_SERVER, :path => API_BASE, :query => params.map {|k,v| "#{k}=#{v}"}.join('&')
+      URI::HTTP.build :host => API_SERVER, :path => API_BASE, :query => URI.encode_www_form(params)
     end
 
     def search(params={})
