@@ -7,9 +7,9 @@ require "nytimes-article/version"
 module NytimesArticle
   class << self
     API_SERVER  = 'api.nytimes.com'
-    API_VERSION = 'v1'
+    API_VERSION = 'v2'
     API_NAME    = 'search'
-    API_BASE    = "/svc/#{API_NAME}/#{API_VERSION}/article"
+    API_BASE    = "/svc/#{API_NAME}/#{API_VERSION}/articlesearch.json"
 
     @@api_key          = nil
     @@debug            = false
@@ -41,7 +41,7 @@ module NytimesArticle
     ##
     # Builds a request URI to call the API server
     def build_request_url(params)
-      URI::HTTP.build :host => API_SERVER, :path => API_BASE, :query => params.map {|k,v| "#{k}=#{v}"}.join('&')
+      URI::HTTP.build :host => API_SERVER, :path => API_BASE, :query => URI.encode_www_form(params)
     end
 
     def search(params={})
@@ -49,7 +49,7 @@ module NytimesArticle
         if @@api_key.nil?
           raise "You must initialize the API key before you run any API queries"
         end
-        full_params  = params.merge 'api-key' => @@api_key, 'format' => 'json'
+        full_params  = params.merge 'api-key' => @@api_key
         uri          = build_request_url(full_params)
         reply        = uri.read
         parsed_reply = JSON.parse reply
